@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceylon Travel Diary</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
+body {line-height:1.6; color:#333;}
+header {background:#00aaff; color:#fff; padding:20px 0; text-align:center;}
+header h1 {margin-bottom:10px;}
+nav ul {display:flex; justify-content:center; list-style:none; flex-wrap:wrap;}
+nav ul li {margin:0 15px;}
+nav ul li a {color:#fff; text-decoration:none; font-weight:bold;}
+nav ul li a:hover {text-decoration:underline;}
+section {padding:50px 20px;}
+.container {max-width:1200px; margin:0 auto;}
+.filter-search {text-align:center; margin-bottom:30px;}
+.filter-search input, .filter-search select {padding:10px; margin:5px; border-radius:5px; border:1px solid #ccc;}
+.places-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
+.place-card {border:1px solid #ddd; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.place-card img {width:100%; height:200px; object-fit:cover; cursor:pointer;}
+.place-card-content {padding:15px;}
+.place-card h3 {margin-bottom:10px; color:#00aaff;}
+.place-card p {margin-bottom:10px;}
+.btn {display:inline-block; padding:10px 15px; background:#00aaff; color:#fff; text-decoration:none; border-radius:5px;}
+.btn:hover {background:#0088cc;}
+footer {background:#222; color:#fff; text-align:center; padding:20px;}
+iframe {width:100%; height:200px; border:0; border-radius:10px;}
+form {display:flex; flex-direction:column; max-width:500px; margin:0 auto;}
+form input, form textarea {padding:10px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;}
+form button {padding:10px; background:#00aaff; color:#fff; border:none; border-radius:5px; cursor:pointer;}
+form button:hover {background:#0088cc;}
+/* Lightbox */
+#lightbox {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;}
+#lightbox img {max-width:90%; max-height:90%; border-radius:10px;}
+#lightbox span {position:absolute; top:20px; right:30px; color:#fff; font-size:30px; cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+    <h1>Ceylon Travel Diary</h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#places">Places to Visit</a></li>
+            <li><a href="#booking">Booking</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+</header>
+
+<section id="home">
+<div class="container">
+    <h2>Welcome to Ceylon Travel Diary</h2>
+    <p>Explore the beauty of Sri Lanka, book your visits, and discover amazing places with our guide. Find hotels and plan your perfect journey easily via Booking.com!</p>
+</div>
+</section>
+
+<section id="places">
+<div class="container">
+    <h2>Top Places to Visit in Sri Lanka</h2>
+    <div class="filter-search">
+        <input type="text" id="searchInput" placeholder="Search place...">
+        <select id="regionFilter">
+            <option value="all">All Regions</option>
+            <option value="north">North</option>
+            <option value="south">South</option>
+            <option value="east">East</option>
+            <option value="west">West</option>
+            <option value="central">Central</option>
+        </select>
+    </div>
+    <div class="places-grid" id="placesGrid">
+
+<!-- START OF 25 PLACE CARDS -->
+
+<!-- Place 1: Sigiriya -->
+<div class="place-card" data-name="Sigiriya Rock Fortress" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?sigiriya,srilanka" alt="Sigiriya" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Sigiriya Rock Fortress</h3>
+        <p>Ancient rock fortress, UNESCO World Heritage Site, and iconic Sri Lanka landmark.</p>
+        <iframe src="https://www.google.com/maps?q=Sigiriya&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 2: Temple of the Tooth -->
+<div class="place-card" data-name="Temple of the Tooth" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?kandy,srilanka" alt="Temple of the Tooth" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Temple of the Tooth, Kandy</h3>
+        <p>One of the most sacred Buddhist sites, holding the relic of Buddha's tooth.</p>
+        <iframe src="https://www.google.com/maps?q=Temple of the Tooth,Kandy&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 3: Yala National Park -->
+<div class="place-card" data-name="Yala National Park" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?yala,srilanka" alt="Yala National Park" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Yala National Park</h3>
+        <p>Famous national park for wildlife safaris, including leopards and elephants.</p>
+        <iframe src="https://www.google.com/maps?q=Yala National Park&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 4: Adam's Peak -->
+<div class="place-card" data-name="Adam's Peak" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?adams-peak,srilanka" alt="Adam's Peak" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Adam's Peak</h3>
+        <p>Famous mountain pilgrimage site offering breathtaking sunrise views.</p>
+        <iframe src="https://www.google.com/maps?q=Adams Peak&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 5: Polonnaruwa -->
+<div class="place-card" data-name="Polonnaruwa Ancient City" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?polonnaruwa,srilanka" alt="Polonnaruwa" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Polonnaruwa Ancient City</h3>
+        <p>UNESCO World Heritage Site showcasing the medieval capital of Sri Lanka.</p>
+        <iframe src="https://www.google.com/maps?q=Polonnaruwa&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 6: Galle Fort -->
+<div class="place-card" data-name="Galle Fort" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?galle-fort,srilanka" alt="Galle Fort" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Galle Fort</h3>
+        <p>Historical fort built by the Portuguese and expanded by the Dutch, UNESCO site.</p>
+        <iframe src="https://www.google.com/maps?q=Galle Fort&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 7: Nuwara Eliya -->
+<div class="place-card" data-name="Nuwara Eliya" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?nuwara-eliya,srilanka" alt="Nuwara Eliya" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Nuwara Eliya</h3>
+        <p>Scenic hill city surrounded by tea plantations and waterfalls.</p>
+        <iframe src="https://www.google.com/maps?q=Nuwara Eliya&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 8: Dambulla Cave Temple -->
+<div class="place-card" data-name="Dambulla Cave Temple" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?dambulla,srilanka" alt="Dambulla Cave Temple" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Dambulla Cave Temple</h3>
+        <p>UNESCO World Heritage Site famous for its cave temples and Buddha statues.</p>
+        <iframe src="https://www.google.com/maps?q=Dambulla Cave Temple&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 9: Bentota Beach -->
+<div class="place-card" data-name="Bentota Beach" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?bentota,srilanka" alt="Bentota Beach" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Bentota Beach</h3>
+        <p>Popular beach destination known for water sports and relaxing coastline.</p>
+        <iframe src="https://www.google.com/maps?q=Bentota Beach&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 10: Mirissa Beach -->
+<div class="place-card" data-name="Mirissa Beach" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?mirissa,srilanka" alt="Mirissa Beach" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Mirissa Beach</h3>
+        <p>Famous for whale watching, beautiful sunsets, and vibrant beach life.</p>
+        <iframe src="https://www.google.com/maps?q=Mirissa Beach&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 11: Anuradhapura -->
+<div class="place-card" data-name="Anuradhapura Ancient City" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?anuradhapura,srilanka" alt="Anuradhapura" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Anuradhapura Ancient City</h3>
+        <p>Historic city with ancient stupas and ruins, UNESCO World Heritage Site.</p>
+        <iframe src="https://www.google.com/maps?q=Anuradhapura&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 12: Horton Plains -->
+<div class="place-card" data-name="Horton Plains" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?horton-plains,srilanka" alt="Horton Plains" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Horton Plains & World's End</h3>
+        <p>National park with breathtaking cliffs, wildlife, and scenic trails.</p>
+        <iframe src="https://www.google.com/maps?q=Horton Plains&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 13: Ella -->
+<div class="place-card" data-name="Ella" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?ella,srilanka" alt="Ella" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Ella</h3>
+        <p>Charming hill town famous for Nine Arches Bridge and tea plantations.</p>
+        <iframe src="https://www.google.com/maps?q=Ella&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 14: Udawalawe -->
+<div class="place-card" data-name="Udawalawe National Park" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?udawalawe,srilanka" alt="Udawalawe National Park" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Udawalawe National Park</h3>
+        <p>Known for elephant safaris and diverse wildlife.</p>
+        <iframe src="https://www.google.com/maps?q=Udawalawe National Park&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 15: Polhena Beach -->
+<div class="place-card" data-name="Polhena Beach" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?polhena,srilanka" alt="Polhena Beach" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Polhena Beach</h3>
+        <p>Beautiful snorkeling beach with calm waters.</p>
+        <iframe src="https://www.google.com/maps?q=Polhena Beach&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 16: Jaffna -->
+<div class="place-card" data-name="Jaffna" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?jaffna,srilanka" alt="Jaffna" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Jaffna</h3>
+        <p>Historic northern city with rich culture, temples, and cuisine.</p>
+        <iframe src="https://www.google.com/maps?q=Jaffna&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 17: Trincomalee -->
+<div class="place-card" data-name="Trincomalee" data-region="east">
+    <img src="https://source.unsplash.com/400x300/?trincomalee,srilanka" alt="Trincomalee" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Trincomalee</h3>
+        <p>Harbor city famous for Nilaveli Beach, Koneswaram Temple, and diving.</p>
+        <iframe src="https://www.google.com/maps?q=Trincomalee&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 18: Negombo -->
+<div class="place-card" data-name="Negombo" data-region="west">
+    <img src="https://source.unsplash.com/400x300/?negombo,srilanka" alt="Negombo" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Negombo</h3>
+        <p>Beach city near Colombo, famous for lagoon, seafood, and Dutch fort.</p>
+        <iframe src="https://www.google.com/maps?q=Negombo&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 19: Colombo -->
+<div class="place-card" data-name="Colombo" data-region="west">
+    <img src="https://source.unsplash.com/400x300/?colombo,srilanka" alt="Colombo" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Colombo</h3>
+        <p>Capital city, shopping, nightlife, cultural sites, and modern attractions.</p>
+        <iframe src="https://www.google.com/maps?q=Colombo&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 20: Mount Lavinia -->
+<div class="place-card" data-name="Mount Lavinia" data-region="west">
+    <img src="https://source.unsplash.com/400x300/?mount-lavinia,srilanka" alt="Mount Lavinia" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Mount Lavinia</h3>
+        <p>Beach destination near Colombo known for golden sands and seafood.</p>
+        <iframe src="https://www.google.com/maps?q=Mount Lavinia&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 21: Hikkaduwa -->
+<div class="place-card" data-name="Hikkaduwa" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?hikkaduwa,srilanka" alt="Hikkaduwa" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Hikkaduwa</h3>
+        <p>Famous surfing and snorkeling beach with vibrant nightlife.</p>
+        <iframe src="https://www.google.com/maps?q=Hikkaduwa&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 22: Unawatuna -->
+<div class="place-card" data-name="Unawatuna" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?unawatuna,srilanka" alt="Unawatuna" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Unawatuna</h3>
+        <p>Beautiful beach destination with calm waters and coral reefs.</p>
+        <iframe src="https://www.google.com/maps?q=Unawatuna&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 23: Arugam Bay -->
+<div class="place-card" data-name="Arugam Bay" data-region="east">
+    <img src="https://source.unsplash.com/400x300/?arugam-bay,srilanka" alt="Arugam Bay" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Arugam Bay</h3>
+        <p>World-famous surfing destination with a relaxed coastal vibe.</p>
+        <iframe src="https://www.google.com/maps?q=Arugam Bay&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 24: Kandy Lake -->
+<div class="place-card" data-name="Kandy Lake" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?kandy-lake,srilanka" alt="Kandy Lake" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Kandy Lake</h3>
+        <p>Scenic lake in the heart of Kandy city, near Temple of the Tooth.</p>
+        <iframe src="https://www.google.com/maps?q=Kandy Lake&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 25: Pinnawala Elephant Orphanage -->
+<div class="place-card" data-name="Pinnawala Elephant Orphanage" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?pinnawala,srilanka" alt="Pinnawala Elephant Orphanage" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Pinnawala Elephant Orphanage</h3>
+        <p>Popular tourist destination to see elephants up close and feeding shows.</p>
+        <iframe src="https://www.google.com/maps?q=Pinnawala Elephant Orphanage&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 26: Minneriya National Park -->
+<div class="place-card" data-name="Minneriya National Park" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?minneriya,srilanka" alt="Minneriya National Park" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Minneriya National Park</h3>
+        <p>Famous for the “Gathering of Elephants” phenomenon, perfect for safaris.</p>
+        <iframe src="https://www.google.com/maps?q=Minneriya National Park&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 27: Knuckles Mountain Range -->
+<div class="place-card" data-name="Knuckles Mountains" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?knuckles-mountains,srilanka" alt="Knuckles Mountains" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Knuckles Mountain Range</h3>
+        <p>Stunning mountain range ideal for trekking and nature photography.</p>
+        <iframe src="https://www.google.com/maps?q=Knuckles Mountain Range&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 28: Ritigala Forest Monastery -->
+<div class="place-card" data-name="Ritigala Monastery" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?ritigala,srilanka" alt="Ritigala Forest Monastery" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Ritigala Forest Monastery</h3>
+        <p>Ancient monastery ruins set in a dense forest, mysterious and serene.</p>
+        <iframe src="https://www.google.com/maps?q=Ritigala Forest Monastery&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 29: Kalpitiya -->
+<div class="place-card" data-name="Kalpitiya" data-region="west">
+    <img src="https://source.unsplash.com/400x300/?kalpitiya,srilanka" alt="Kalpitiya" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Kalpitiya</h3>
+        <p>Coastal town known for dolphin and whale watching, kite surfing, and beaches.</p>
+        <iframe src="https://www.google.com/maps?q=Kalpitiya&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 30: Passikudah Beach -->
+<div class="place-card" data-name="Passikudah" data-region="east">
+    <img src="https://source.unsplash.com/400x300/?passikudah,srilanka" alt="Passikudah Beach" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Passikudah Beach</h3>
+        <p>Shallow lagoon and pristine white sand beach perfect for swimming and relaxing.</p>
+        <iframe src="https://www.google.com/maps?q=Passikudah&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 31: Wilpattu National Park -->
+<div class="place-card" data-name="Wilpattu National Park" data-region="north">
+    <img src="https://source.unsplash.com/400x300/?wilpattu,srilanka" alt="Wilpattu National Park" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Wilpattu National Park</h3>
+        <p>Largest national park in Sri Lanka, home to leopards, elephants, and bird species.</p>
+        <iframe src="https://www.google.com/maps?q=Wilpattu National Park&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 32: Diyaluma Falls -->
+<div class="place-card" data-name="Diyaluma Falls" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?diyaluma-falls,srilanka" alt="Diyaluma Falls" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Diyaluma Falls</h3>
+        <p>Second highest waterfall in Sri Lanka with a beautiful natural pool at the top.</p>
+        <iframe src="https://www.google.com/maps?q=Diyaluma Falls&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 33: Arugam Bay Lagoon -->
+<div class="place-card" data-name="Arugam Bay Lagoon" data-region="east">
+    <img src="https://source.unsplash.com/400x300/?arugam-bay-lagoon,srilanka" alt="Arugam Bay Lagoon" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Arugam Bay Lagoon</h3>
+        <p>Beautiful lagoon near the surfing beaches of Arugam Bay, perfect for kayaking.</p>
+        <iframe src="https://www.google.com/maps?q=Arugam Bay Lagoon&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 34: Sinharaja Forest Reserve -->
+<div class="place-card" data-name="Sinharaja Forest Reserve" data-region="south">
+    <img src="https://source.unsplash.com/400x300/?sinharaja,srilanka" alt="Sinharaja Forest Reserve" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Sinharaja Forest Reserve</h3>
+        <p>UNESCO World Heritage rainforest with rich biodiversity, ideal for nature lovers.</p>
+        <iframe src="https://www.google.com/maps?q=Sinharaja Forest Reserve&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+<!-- Place 35: Knuckles River Trails -->
+<div class="place-card" data-name="Knuckles River Trails" data-region="central">
+    <img src="https://source.unsplash.com/400x300/?knuckles-trails,srilanka" alt="Knuckles River Trails" onclick="openLightbox(this.src)">
+    <div class="place-card-content">
+        <h3>Knuckles River Trails</h3>
+        <p>Scenic trekking trails along rivers and waterfalls in the Knuckles mountain range.</p>
+        <iframe src="https://www.google.com/maps?q=Knuckles River Trails&output=embed"></iframe>
+        <a class="btn" href="https://www.booking.com" target="_blank">Book Now</a>
+    </div>
+</div>
+
+
+
+<!-- END OF 35 PLACE CARDS -->
+
+    </div>
+</div>
+</section>
+
+<section id="booking">
+<div class="container">
+    <h2>Book Your Stay & Visit</h2>
+    <p>Plan your trip easily via Booking.com for hotels and tours across Sri Lanka.</p>
+    <a class="btn" href="https://www.booking.com" target="_blank">Go to Booking.com</a>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+    <h2>About Ceylon Travel Diary</h2>
+    <p>Welcome to Ceylon Travel Diary – Your Ultimate Guide to Exploring Sri Lanka!
+
+Discover the beauty, culture, and adventure of Sri Lanka with Ceylon Travel Diary. From pristine beaches and lush mountains to ancient heritage sites and vibrant cities, we provide detailed guides, stunning images, and interactive maps for every destination.
+
+Plan your perfect journey effortlessly with our curated recommendations and direct booking links via Booking.com. Whether you are looking for wildlife safaris, cultural landmarks, or serene escapes, our platform ensures every traveler experiences the magic of Sri Lanka.
+
+Join thousands of visitors who trust Ceylon Travel Diary for inspiration, planning, and unforgettable adventures across this tropical paradise!</p>
+    <p>Follow us on Facebook: <a href="YOUR_FACEBOOK_PAGE_LINK" target="_blank">https://www.facebook.com/share/1DMz3wsNKj/</a></p>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+    <h2>Contact Us</h2>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+</section>
+
+<footer>
+<p>&copy; 2025 Ceylon Travel Diary | All Rights Reserved</p>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+    <span>&times;</span>
+    <img id="lightboxImg" src="">
+</div>
+
+<script>
+    // Lightbox
+    function openLightbox(src){
+        document.getElementById('lightbox').style.display='flex';
+        document.getElementById('lightboxImg').src = src;
+    }
+    function closeLightbox(){
+        document.getElementById('lightbox').style.display='none';
+    }
+
+    // Search and Filter
+    const searchInput = document.getElementById('searchInput');
+    const regionFilter = document.getElementById('regionFilter');
+    const placeCards = document.querySelectorAll('.place-card');
+
+    searchInput.addEventListener('keyup', filterPlaces);
+    regionFilter.addEventListener('change', filterPlaces);
+
+    function filterPlaces(){
+        const searchText = searchInput.value.toLowerCase();
+        const regionValue = regionFilter.value;
+        placeCards.forEach(card => {
+            const name = card.dataset.name.toLowerCase();
+            const region = card.dataset.region.toLowerCase();
+            if((name.includes(searchText) || searchText==='') && (region === regionValue || regionValue==='all')){
+                card.style.display='block';
+            } else {
+                card.style.display='none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
